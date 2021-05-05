@@ -28,20 +28,25 @@ const useStyles = makeStyles((theme) => ({
 function StateAndDistrictWrapper({setDistrictCallback}) {
     const classes = useStyles();
     const [{ states, districts }, { getAllStatesData, getAllDistrictData }] = useCowinVaccineDataRequest();
-    const [open, setOpen] = React.useState(true);
-    const [state, setState] = React.useState('');
-    const [district, setDistrict] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+    const [state, setState] = React.useState(sessionStorage.getItem('stateId'));
+    const [district, setDistrict] = React.useState(sessionStorage.getItem('districtId'));
     useEffect(() => {
         getAllStatesData();
+        if(state == null || district == null){
+            setOpen(true);
+        }
     }, []);
 
     useEffect(() => {
         if(!open && district){
+            sessionStorage.setItem('districtId',district);
             setDistrictCallback(district);
         }
     }, [open])
     useEffect(() => {
         if (state) {
+            sessionStorage.setItem('stateId',state);
             getAllDistrictData(state);
         }
     }, [state])
@@ -61,8 +66,14 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
         setOpen(false);
     };
     
-    let stateObject = _.find(states, (dist)=> {return dist.state_id === state})
-    let districtObject = _.find(districts, (dist)=> {return dist.district_id === district})
+    let stateObject = _.find(states, (dist)=> {return dist.state_id === state}) || JSON.parse(sessionStorage.getItem('stateObject'));
+    if(stateObject && stateObject.state_name){
+        sessionStorage.setItem('stateObject',JSON.stringify(stateObject) );
+    }
+    let districtObject = _.find(districts, (dist)=> {return dist.district_id === district})|| JSON.parse(sessionStorage.getItem('districtObject'));
+    if(districtObject && districtObject.district_name){
+        sessionStorage.setItem('districtObject',JSON.stringify(districtObject) );
+    }
     return (
         <div>
             <div className = "location_filter">
