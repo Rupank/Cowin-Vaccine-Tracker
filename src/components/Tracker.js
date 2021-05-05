@@ -3,7 +3,7 @@ import useCowinVaccineDataRequest from '../hooks/useCowinVaccineDataRequest/';
 import SearchByPincode from './SearchByPincode';
 import StateAndDistrictWrapper from './StateAndDistrictWrapper';
 import TableGrid from './TableGrid';
-const MINUTE_MS = 1000000;
+const MINUTE_MS = 30000;
 function Tracker() {
    
     const [pincodeUI, setPincodeUI] = useState();
