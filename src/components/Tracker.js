@@ -58,7 +58,7 @@ function Tracker() {
 
     return (
         <div>
-          <SearchByPincode setPincode = {setPincode}/>
+          {/* <SearchByPincode setPincode = {setPincode}/> */}
           <StateAndDistrictWrapper setDistrictCallback = {setDistrictCallback}/>
           {isLoading && 
           <div>LOADING.......</div> 

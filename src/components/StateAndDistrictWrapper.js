@@ -66,7 +66,7 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
     return (
         <div>
             <div className = "location_filter">
-                <Button onClick={handleClickOpen} className = {classes.button} variant = "outlined" color="secondary">
+                <Button onClick={handleClickOpen} className = {classes.button} variant = "outlined" color="primary">
                     Change State and District 
                 </Button>
                 <div>State - {stateObject && stateObject.state_name}</div>
