@@ -9,10 +9,13 @@ function Tracker() {
     const [pincodeUI, setPincodeUI] = useState();
     const [districtOnUI, setDistrictOnUI] = useState();
     const [{isLoading, errorMsg, availableCenters}, {makeRequest}] = useCowinVaccineDataRequest();
-    const [refreshInterval, setRefreshInterval] = useState(null);
+    const [refreshInterval, setRefreshInterval] = useState({});
 
     useEffect(() => {
       if(pincodeUI && pincodeUI.length === 6){
+        if(refreshInterval){
+          clearInterval(refreshInterval);
+        }
         makeRequest({isSearchedByPinCode: true, value: pincodeUI});
         let interval = setInterval(() => {
           makeRequest({isSearchedByPinCode: true, value: pincodeUI});
@@ -28,6 +31,10 @@ function Tracker() {
 
     useEffect(() => {
       if(districtOnUI){
+        if(refreshInterval){
+          clearInterval(refreshInterval);
+        }
+
         makeRequest({isSearchedByPinCode: false, value: districtOnUI});
         let interval = setInterval(() => {
           makeRequest({isSearchedByPinCode: false, value: districtOnUI});
