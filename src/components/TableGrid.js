@@ -69,7 +69,7 @@ export default function TableGrid({availableCenters}) {
                   </TableCell>
                   {
                     row.values.map((val,index)=>(
-                      <TableCell align="center" key = {val.availableCapacity+'_'+index}>
+                      <TableCell align="center" key = {val?.availableCapacity+'_'+index}>
                         <VaccineAvailablityCard card={val} />
                         </TableCell>
                     ))

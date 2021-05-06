@@ -1,27 +1,28 @@
-import React, { useRef, useEffect} from 'react'
+import React, { useRef, useEffect } from 'react'
 
-function SearchByPincode({setPincode}) {
-const inputRef = useRef(null);
+function SearchByPincode({ setPincode }) {
+    const inputRef = useRef(null);
 
-// To add focus for the first time when this component is rendered
-useEffect(() => {
-    inputRef.current.focus();
-}, [])
+    // To add focus for the first time when this component is rendered
+    useEffect(() => {
+        // inputRef.current.focus();
+    }, [])
 
- // Handling of input whenever user types something in input box
- const onInputChange = (event) => {
-    let inputValue = event.target.value.trim();
-    // Whenever user hit enter then fetchGifData action is getting triggered
-    if (event.keyCode === 13 && inputValue !== '' && inputValue.length === 6) {
-        setPincode(inputValue);
-        // fetchGifData(event.target.value.trim());
+    // Handling of input whenever user types something in input box
+    const onInputChange = (event) => {
+        let inputValue = event.target.value.trim();
+        if ( inputValue !== '' && inputValue.length === 6) {
+            setPincode(inputValue);
+        }
     }
-}
 
     return (
-        <div className="searchBox">
-            <input onKeyDown={onInputChange} ref={inputRef} placeholder='Type a 6 letter pincode and Hit Enter' />
+        <div>
+            <div className="searchBox">
+                <input onKeyDown={onInputChange} ref={inputRef} placeholder='Enter Pincode' />
+            </div>
         </div>
+
     )
 }
 

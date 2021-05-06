@@ -29,11 +29,14 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
     const classes = useStyles();
     const [{ states, districts }, { getAllStatesData, getAllDistrictData }] = useCowinVaccineDataRequest();
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = React.useState(sessionStorage.getItem('stateId'));
-    const [district, setDistrict] = React.useState(sessionStorage.getItem('districtId'));
+    const [state, setState] = React.useState(sessionStorage.getItem('stateId') || '');
+    const [district, setDistrict] = React.useState(sessionStorage.getItem('districtId') || '');
+    const [age, setAge] = React.useState(0);
     useEffect(() => {
         getAllStatesData();
-        if(state == null || district == null){
+        if(!state || !district){
+            setState('');
+            setDistrict('');
             setOpen(true);
         }
     }, []);
@@ -56,6 +59,10 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
 
     const handleDistrictChange = (event) => {
         setDistrict(Number(event.target.value) || '');
+    }
+
+    const handleAgeChange = (event) => {
+        setAge(Number(event.target.value) || '');
     }
 
     const handleClickOpen = () => {
@@ -84,16 +91,16 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
                 <div>District - {districtObject && districtObject.district_name}</div>
             </div>
             <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-                <DialogTitle>Select State And District</DialogTitle>
+                <DialogTitle>Select State, District</DialogTitle>
                 <DialogContent>
                     <form className={classes.container}>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="demo-dialog-native">State</InputLabel>
+                            <InputLabel htmlFor="state-dropdown-label">State</InputLabel>
                             <Select
                                 native
                                 value={state}
                                 onChange={handleStateChange}
-                                input={<Input id="demo-dialog-native" />}
+                                input={<Input id="state-dropdown" />}
                             >
                                 <option aria-label="None" value="" />
                                 {
@@ -104,12 +111,12 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
                             </Select>
                         </FormControl>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="demo-dialog-select-label">District</InputLabel>
+                            <InputLabel htmlFor="district-dropdown-label">District</InputLabel>
                             <Select
                                 native
                                 value={district}
                                 onChange={handleDistrictChange}
-                                input={<Input />}
+                                input={<Input id="district-dropdown"/>}
                             >
                                 <option aria-label="None" value="" />
                                 {
@@ -119,6 +126,20 @@ function StateAndDistrictWrapper({setDistrictCallback}) {
                                 }
                             </Select>
                         </FormControl>
+
+                        {/* <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="age-dropdown-label">Age</InputLabel>
+                            <Select
+                                native
+                                value={age}
+                                onChange={handleAgeChange}
+                                input={<Input id="age-dropdown"/>}>
+                                <option value={0}>All</option>
+                                <option value={18}>18 to 44</option>
+                                <option value={45}>45+</option>
+                            </Select>
+                        </FormControl> */}
+                        
                     </form>
                 </DialogContent>
                 <DialogActions>

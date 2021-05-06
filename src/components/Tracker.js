@@ -3,7 +3,7 @@ import useCowinVaccineDataRequest from '../hooks/useCowinVaccineDataRequest/';
 import SearchByPincode from './SearchByPincode';
 import StateAndDistrictWrapper from './StateAndDistrictWrapper';
 import TableGrid from './TableGrid';
-const MINUTE_MS = 20000;
+const MINUTE_MS = 60000;
 function Tracker() {
    
     const [pincodeUI, setPincodeUI] = useState();
@@ -58,7 +58,7 @@ function Tracker() {
 
     return (
         <div>
-          {/* <SearchByPincode setPincode = {setPincode}/> */}
+          <SearchByPincode setPincode = {setPincode}/>
           <StateAndDistrictWrapper setDistrictCallback = {setDistrictCallback}/>
           {isLoading && 
           <div>LOADING.......</div> 
@@ -68,7 +68,7 @@ function Tracker() {
           <TableGrid availableCenters={availableCenters}/>
         )}
         {availableCenters && availableCenters.length === 0 && (
-          <div className = "not_available_div">Vaccines Not Available at the moment for selection. Status gets refreshed every {MINUTE_MS/1000} seconds</div>
+          <div className = "not_available_div">No slots available at the moment for selection. Status gets refreshed every {MINUTE_MS/1000} seconds</div>
         )}
         </div>
     )
